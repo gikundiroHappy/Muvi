@@ -3,7 +3,6 @@ import {View,StyleSheet,Image, Pressable,Dimensions,Text, SafeAreaView,FlatList}
 import Feather from 'react-native-vector-icons/Feather'
 import Profilecontent from '../components/profile.jsx';
 import { profileData } from '../properties';
-import Navigation from '../components/navigation.js';
 
 
 const height = Dimensions.get('screen').height;
@@ -44,7 +43,6 @@ export default function Profile({navigation}) {
       style={{borderWidth:1, width:"100%", borderColor:"#3B3E3F",borderRadius:5,paddingVertical:10}}><Text style={{color:"#B76C5B",textAlign:"center"}}> Log Out</Text></Pressable>
 </View>
 
- <Navigation/>
  </SafeAreaView>
   );
 }

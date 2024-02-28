@@ -12,7 +12,7 @@ export default function Play({navigation}) {
   return (
  <SafeAreaView style={styles.container}>
  <View >
-    <View style={{width:"100%", backgroundColor:"#1F2123",display:"flex",flexDirection:"row",justifyContent:"center"}}>
+  <View style={{width:"100%", backgroundColor:"#1F2123",display:"flex",flexDirection:"row",justifyContent:"center"}}>
   <Image source={require('../assets/home.png')}/>
   </View>
   <View style={{paddingHorizontal:20}}>

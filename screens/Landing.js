@@ -6,10 +6,7 @@ import Trends from '../components/trends.jsx';
 import Features from '../components/features.jsx';
 import Newrelease from '../components/newRelease.jsx';
 import Popularmuvi from '../components/popular.jsx';
-import Navigation from '../components/navigation.js';
 import { ActivityIndicator } from 'react-native-paper';
-import Bottomnav from './BottomNav/Bottomnav.js';
-
 
 const height = Dimensions.get('screen').height;
 const width = Dimensions.get('screen').width;
@@ -114,7 +111,8 @@ export default function Landing({navigation}) {
       <View>
 {isLoading?  (<ActivityIndicator animating={isLoading} color='#FFD130'/>):( <FlatList horizontal showsHorizontalScrollIndicator={false}
         data={movies}
-        renderItem={({item}) => <Newrelease title={item.vote_average} image={item.poster_path}/>}
+        renderItem={({item}) => <Newrelease title={item.vote_average} image={item.poster_path} onPress={() =>{ 
+          navigation.navigate('details')}}/>}
         keyExtractor={item => item.id.toString()}
         
       />)}
@@ -166,8 +164,5 @@ export default function Landing({navigation}) {
 
 </ScrollView>
 
-
-
-<Bottomnav/>
 </SafeAreaView>
   )}

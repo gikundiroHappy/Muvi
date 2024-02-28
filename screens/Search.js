@@ -1,18 +1,39 @@
-import React,{useEffect, useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import {View,StyleSheet, ScrollView,Image,Dimensions,Text, SafeAreaView,FlatList} from 'react-native';
 import { TextInput } from 'react-native-paper';
 import Features from '../components/features';
 import { featuresData } from '../properties';
-import Navigation from '../components/navigation';
+import Popularmuvi from '../components/popular.jsx';
+
 
 const height = Dimensions.get('screen').height;
 const width = Dimensions.get('screen').width;
 
 export default function Search() {
 
-  const [moviesList,setMoviesList] = useState([])
   const [isLoading, setIsLoading] = useState(false)
+  const [popularMovies, setPopularMovies] = useState([])
+  
+  useEffect(() => {
+    Getpopular()
+  },[]);
 
+  const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ZWNjY2Y2ZDY4MWI5MDVhZDNlNzA3MTI3Y2UxMzVlYyIsInN1YiI6IjY1ZDg2YzBiY2FhNTA4MDE4YTM0MTM1MiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.2TFkovSh1xp8gcoTBYhee8W0E8YrGu-NvAMn6JxBNBo'
+    }
+  };
+
+  const Getpopular = ()=>{
+    setIsLoading(true)
+    fetch("https://api.themoviedb.org/3/movie/popular?language=en-US&page=1", options).
+  then((response)=>response.json()).then((response)=>{
+    setIsLoading(false)
+    setPopularMovies(response.results)
+  }).catch((err)=>console.error(err))
+  }
 
   return (
  <SafeAreaView style={styles.container}>
@@ -30,6 +51,9 @@ export default function Search() {
       />
 </View>
 
+  <ScrollView>
+  {isLoading?  (
+     <View>
 <View style={{display:"flex",flexDirection:"row",justifyContent:"center", paddingTop:30}}>
 <Image source={require('../assets/search.png')}/>
 </View>
@@ -38,22 +62,31 @@ export default function Search() {
 <Text style={{textAlign:"center",color:"white",fontWeight:"bold",paddingVertical:20}}>Find your Movie</Text>
 <Text style={{textAlign:"center",color:"#898B8F"}}>Search movie, originals,as you like</Text>
 </View>
+
 <View style={{height:162}}></View>
-
-    </View>
-    <Navigation/>
-
-  <ScrollView>
-  {isLoading?  (<Text></Text>):(<Text></Text>)}
+</View> 
+  ):(<Text>
+    <View >
+      {
+        popularMovies.map((item,index)=>{
+          return (
+            <View key={index}>
+            <Popularmuvi title={item.vote_average} image={item.poster_path}/>
+            </View>
+          )
+        })
+      }
+      </View>
+  </Text>)}
       
     </ScrollView>
+    </View>
  </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
     container: {
-    backgroundColor:"red",
     width:width,
     height:height,
  
