@@ -9,10 +9,13 @@ import Newrelease from '../components/newRelease.jsx';
 const height = Dimensions.get('screen').height;
 const width = Dimensions.get('screen').width;
 
-export default function Moviedetails({navigation}) {
+export default function Moviedetails({navigation,route}) {
   const [isLoading, setIsLoading] = useState(false)
   const [movies,setMovies] = useState([])
   const [madeMovies, setMadeMovies] = useState([])
+
+  const { movie } = route.params;
+  const posterPath = movie?.poster_path;
 
   useEffect(() => {
     Getmovies()
@@ -56,12 +59,12 @@ export default function Moviedetails({navigation}) {
     </View>
 
   <View style={{display:"flex",flexDirection:"row",justifyContent:"center"}}>
-  <Image source={require('../assets/movie4.jpeg')} style={{width:"100%"}} />
+  <Image source={{ uri: `https://image.tmdb.org/t/p/w500${posterPath}` }} style={{width:"100%"}} />
   </View>
 
   <View>
-    <Text style={{fontWeight:600,fontSize:20,color:"white",paddingVertical:20}}>Jumanji: The Next Level</Text>
-    <Text style={{fontSize:16,color:"#919397",paddingVertical:10}}>When the world is under attack from cretures from hunt their human prey by sound, a teenager</Text>
+    <Text style={{fontWeight:600,fontSize:20,color:"white",paddingVertical:20}}>{movie?.title}</Text>
+    <Text style={{fontSize:16,color:"#919397",paddingVertical:10}}>{movie?.overview}</Text>
   </View>
 
 <View style={{display:"flex",flexDirection:"row", gap:13,width:"100%",paddingVertical:20,}}>

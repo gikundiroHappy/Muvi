@@ -9,7 +9,7 @@ import axios from 'axios';
 const height = Dimensions.get('screen').height;
 const width = Dimensions.get('screen').width;
 
-export default function Search() {
+export default function Search({navigation}) {
 
   const [searchText, setSearchText] = useState('')
   const [data, setData] = useState([])
@@ -60,28 +60,13 @@ export default function Search() {
       />
 </View>
 
-  <ScrollView>
-  {/* {isLoading?  (
-     <View>
-<View style={{display:"flex",flexDirection:"row",justifyContent:"center", paddingTop:30}}>
-<Image source={require('../assets/search.png')}/>
-</View>
-
-<View style={{textAlign:"center"}}>
-<Text style={{textAlign:"center",color:"white",fontWeight:"bold",paddingVertical:20}}>Find your Movie</Text>
-<Text style={{textAlign:"center",color:"#898B8F"}}>Search movie, originals,as you like</Text>
-</View>
-
-<View style={{height:162}}></View>
-</View> 
-  ):(<Text>
-    <View > */}
-    
+  <ScrollView>   
       {
         data.map((item,index)=>{
           return (
             <View key={index}>
-            <Popularmuvi title={item.vote_average} image={item.poster_path}/>
+            <Popularmuvi title={item.vote_average} image={item.poster_path} 
+            onPress={()=>navigation.navigate('details', { movie: item })}/>
             </View>
           )
         })
