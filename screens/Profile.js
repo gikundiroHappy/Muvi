@@ -1,5 +1,5 @@
 import React from 'react';
-import {View,StyleSheet,Image, Pressable,Dimensions,Text, SafeAreaView,FlatList} from 'react-native';
+import {View,StyleSheet,Image, Pressable,Dimensions,Text, SafeAreaView,FlatList, TouchableOpacity} from 'react-native';
 import Feather from 'react-native-vector-icons/Feather'
 import Profilecontent from '../components/profile.jsx';
 import { profileData } from '../properties';
@@ -23,10 +23,12 @@ export default function Profile({navigation}) {
         <Text style={{color:"white", fontWeight:"bold", paddingBottom:10}}>Jonathan Doe</Text>
         <Text style={{color:"white",paddingBottom:10,fontWeight:500,color:"#9A9CA0"}}>doe.jonathan@gmail.com</Text>
     </View>
-    <View style={{display:"flex",flexDirection:"row",gap:7}}>
+    <TouchableOpacity
+    onPress={()=>navigation.navigate('editprofile')}
+    style={{display:"flex",flexDirection:"row",gap:7}}>
         <Feather name='edit-2' size={15} color="#C4A22F"/>
         <Text style={{color:"#C4A22F"}}>Edit</Text>
-    </View>
+    </TouchableOpacity>
  </View>
 
  <View style={{backgroundColor:"#25272A" ,paddingHorizontal:30, paddingBottom:20}}>

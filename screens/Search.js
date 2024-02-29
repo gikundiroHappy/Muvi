@@ -4,20 +4,16 @@ import { TextInput } from 'react-native-paper';
 import Features from '../components/features';
 import { featuresData } from '../properties';
 import Popularmuvi from '../components/popular.jsx';
-
+import axios from 'axios';
 
 const height = Dimensions.get('screen').height;
 const width = Dimensions.get('screen').width;
 
 export default function Search() {
 
-  const [isLoading, setIsLoading] = useState(false)
-  const [popularMovies, setPopularMovies] = useState([])
+  const [searchText, setSearchText] = useState('')
+  const [data, setData] = useState([])
   
-  useEffect(() => {
-    Getpopular()
-  },[]);
-
   const options = {
     method: 'GET',
     headers: {
@@ -26,22 +22,35 @@ export default function Search() {
     }
   };
 
-  const Getpopular = ()=>{
-    setIsLoading(true)
-    fetch("https://api.themoviedb.org/3/movie/popular?language=en-US&page=1", options).
-  then((response)=>response.json()).then((response)=>{
-    setIsLoading(false)
-    setPopularMovies(response.results)
-  }).catch((err)=>console.error(err))
+  const Getpopular = async ()=>{
+    try{
+   const response = await axios.get(`https://api.themoviedb.org/3/search/movie?query=${searchText}&include_adult=false&language=en-US&page=1`, options);
+   setData(response.data.results)
+    }catch(error){
+      console.error(error)
+    }
+  }
+
+  useEffect(() => {
+    if(searchText.length > 0){
+    Getpopular()
+  }else{
+    setData([])
+  }
+  },[searchText]);
+
+
+  const GetSearch = ()=>{
+   setSearchText('')
   }
 
   return (
  <SafeAreaView style={styles.container}>
     <View style={{backgroundColor:"#26282C" , paddingHorizontal:20 ,paddingVertical:20}}>
-    <TextInput label="Search Movie Title"
+    <TextInput label="Search Movie Title" value={searchText} onChangeText={setSearchText}
     style={{backgroundColor:"1F2123",}} underlineColor='#77787C' textColor="white"
     theme={{colors:{primary:"#E0BF36"}}}
-    right={<TextInput.Icon size={19} icon="magnify" color="#EED251" ></TextInput.Icon>}
+    right={<TextInput.Icon size={19} icon="magnify" color="#EED251" onPress={GetSearch}></TextInput.Icon>}
     />
 <View style={{paddingVertical:20}}>
 <FlatList horizontal showsHorizontalScrollIndicator={false}
@@ -52,7 +61,7 @@ export default function Search() {
 </View>
 
   <ScrollView>
-  {isLoading?  (
+  {/* {isLoading?  (
      <View>
 <View style={{display:"flex",flexDirection:"row",justifyContent:"center", paddingTop:30}}>
 <Image source={require('../assets/search.png')}/>
@@ -66,9 +75,10 @@ export default function Search() {
 <View style={{height:162}}></View>
 </View> 
   ):(<Text>
-    <View >
+    <View > */}
+    
       {
-        popularMovies.map((item,index)=>{
+        data.map((item,index)=>{
           return (
             <View key={index}>
             <Popularmuvi title={item.vote_average} image={item.poster_path}/>
@@ -76,8 +86,20 @@ export default function Search() {
           )
         })
       }
-      </View>
-  </Text>)}
+      {data.length <= 0 && 
+       <View>
+       <View style={{display:"flex",flexDirection:"row",justifyContent:"center", paddingTop:30}}>
+       <Image source={require('../assets/search.png')}/>
+       </View>
+       
+       <View style={{textAlign:"center"}}>
+       <Text style={{textAlign:"center",color:"white",fontWeight:"bold",paddingVertical:20}}>Find your Movie</Text>
+       <Text style={{textAlign:"center",color:"#898B8F"}}>Search movie, originals,as you like</Text>
+       </View>
+       
+       <View style={{height:173}}></View>
+       </View> 
+      }
       
     </ScrollView>
     </View>

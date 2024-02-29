@@ -9,6 +9,7 @@ import Register from './screens/register.js';
 import Login from './screens/Login.js'
 import Bottomnav from './screens/BottomNav/Bottomnav.js';
 import Moviedetails from './screens/Moviedetails.js';
+import Editprofile from './screens/Editprofile.js';
 
 
 const Stack = createNativeStackNavigator();
@@ -16,13 +17,14 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
    <NavigationContainer>
-   <Stack.Navigator initialRouteName='details'>
+   <Stack.Navigator initialRouteName='home'>
         <Stack.Screen name="home" component={Home} options={{ headerShown: false }} />
         <Stack.Screen name="welcome" component={Welcome} options={{ headerShown: false }} />
         <Stack.Screen name="play" component={Play} options={{ headerShown: false }} />
         <Stack.Screen name="register" component={Register} options={{ headerShown: false }} />
         <Stack.Screen name="login" component={Login} options={{ headerShown: false }} />
         <Stack.Screen name="details" component={Moviedetails} options={{ headerShown: false }} />
+        <Stack.Screen name="editprofile" component={Editprofile} options={{ headerShown: false }} />
        
       <Stack.Screen name="landing" component={Bottomnav} options={{ headerShown: false }} />
       <Stack.Screen name="Search" component={Bottomnav} options={{ headerShown: false }} />
