@@ -4,8 +4,6 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import Feather from 'react-native-vector-icons/Feather'
 import Newrelease from '../components/newRelease.jsx';
 
-
-
 const height = Dimensions.get('screen').height;
 const width = Dimensions.get('screen').width;
 
@@ -13,9 +11,10 @@ export default function Moviedetails({navigation,route}) {
   const [isLoading, setIsLoading] = useState(false)
   const [movies,setMovies] = useState([])
   const [madeMovies, setMadeMovies] = useState([])
+  const [play, setPlay] = useState()
 
-  const { movie } = route.params;
-  const posterPath = movie?.poster_path;
+  const  movie  = route.params;
+  const posterPath = movie.poster_path;
 
   useEffect(() => {
     Getmovies()
@@ -49,26 +48,35 @@ export default function Moviedetails({navigation,route}) {
       })
       .catch(err => console.error(err));
   }
+  
+  const Playmovie = async ()=>{
+    const response = await axios.get(`https://api.themoviedb.org/3/movie/${movie.id}/videos?language=en-US`, options);
+    setPlay(response.data);
+    console.log(response.data)
+  }
+ 
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={{paddingHorizontal:20,}}>
     <View style={{paddingVertical:30,display:"flex",flexDirection:"row",gap:10}}>
-    <AntDesign name="arrowleft" color="#FBC101" size={20} onPress={() => navigation.navigate('home')}/>
+    <AntDesign name="arrowleft" color="#FBC101" size={20} onPress={() => navigation.goBack()}/>
     <Text style={{color:"white",fontWeight:"bold",fontSize:16 }}>Action</Text>
     </View>
 
   <View style={{display:"flex",flexDirection:"row",justifyContent:"center"}}>
-  <Image source={{ uri: `https://image.tmdb.org/t/p/w500${posterPath}` }} style={{width:"100%"}} />
+  <Image source={{ uri: `https://image.tmdb.org/t/p/w500${posterPath}` }} style={{width:"100%",height:180,}} />
   </View>
 
   <View>
-    <Text style={{fontWeight:600,fontSize:20,color:"white",paddingVertical:20}}>{movie?.title}</Text>
+    <Text style={{fontWeight:600,fontSize:20,color:"white",paddingVertical:20}}>{movie.title}</Text>
     <Text style={{fontSize:16,color:"#919397",paddingVertical:10}}>{movie?.overview}</Text>
   </View>
 
 <View style={{display:"flex",flexDirection:"row", gap:13,width:"100%",paddingVertical:20,}}>
-  <TouchableOpacity style={{backgroundColor:"#FDD12F",display:"flex",flexDirection:"row", gap:6,alignItems:"center",justifyContent:"center",width:"48%",paddingVertical:9,borderRadius:5}}>
+  <TouchableOpacity style={{backgroundColor:"#FDD12F",display:"flex",flexDirection:"row", gap:6,alignItems:"center",justifyContent:"center",width:"48%",paddingVertical:9,borderRadius:5}}
+  onPress={Playmovie}
+  >
   <Feather name='play'/>
   <Text>Play</Text>
   </TouchableOpacity>

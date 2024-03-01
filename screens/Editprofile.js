@@ -15,7 +15,7 @@ export default function Editprofile({navigation}) {
   return (
     <SafeAreaView style={styles.container}>
     <View style={{paddingVertical:30,display:"flex",flexDirection:"row",gap:10,paddingHorizontal:20}}>
-    <AntDesign name="arrowleft" color="#FBC101" size={20} onPress={() => navigation.navigate('profile')}/>
+    <AntDesign name="arrowleft" color="#FBC101" size={20} onPress={() => navigation.goBack()}/>
     <Text style={{color:"white",fontWeight:"bold",fontSize:16 }}>Edit Profile</Text>
     </View>
 

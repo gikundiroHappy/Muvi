@@ -67,7 +67,7 @@ export default function Register({navigation}) {
   return (
     <SafeAreaView style={styles.container}>
     <View style={{paddingHorizontal:20,paddingVertical:10,display:"flex",flexDirection:"row",gap:10}}>
-    <AntDesign name="arrowleft" color="#FBC101" size={20} onPress={() => navigation.navigate('login')}/>
+    <AntDesign name="arrowleft" color="#FBC101" size={20} onPress={() => navigation.goBack()}/>
     <Text style={{color:"white",fontWeight:"bold",fontSize:16 }}>Register</Text>
     </View>
 

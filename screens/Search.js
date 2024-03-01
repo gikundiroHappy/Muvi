@@ -66,7 +66,7 @@ export default function Search({navigation}) {
           return (
             <View key={index}>
             <Popularmuvi title={item.vote_average} image={item.poster_path} 
-            onPress={()=>navigation.navigate('details', { movie: item })}/>
+            onPress={()=>navigation.navigate('details',  item )}/>
             </View>
           )
         })

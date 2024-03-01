@@ -58,7 +58,7 @@ export default function Login() {
     <SafeAreaView style={styles.container}>
       <ScrollView>
     <View style={{paddingHorizontal:20,paddingVertical:20,display:"flex",flexDirection:"row",gap:10}}>
-    <AntDesign name="arrowleft" color="#FBC101" size={20} onPress={() => navigation.navigate('play')}/>
+    <AntDesign name="arrowleft" color="#FBC101" size={20} onPress={() => navigation.goBack()}/>
     <Text style={{color:"white",fontWeight:"bold",fontSize:16 }}>Login</Text>
     </View>
 

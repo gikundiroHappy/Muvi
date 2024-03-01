@@ -112,7 +112,7 @@ export default function Landing({navigation}) {
 {isLoading?  (<ActivityIndicator animating={isLoading} color='#FFD130'/>):( <FlatList horizontal showsHorizontalScrollIndicator={false}
         data={movies}
         renderItem={({item}) => <Newrelease title={item.vote_average} image={item.poster_path} onPress={() =>{ 
-          navigation.navigate('details')}}/>}
+          navigation.navigate('details',item)}}/>}
         keyExtractor={item => item.id.toString()}
         
       />)}
@@ -129,7 +129,10 @@ export default function Landing({navigation}) {
       <View>
       {isLoading?  (<ActivityIndicator animating={isLoading} color='#FFD130'/>):(<FlatList horizontal showsHorizontalScrollIndicator={false}
         data={madeMovies}
-        renderItem={({item}) => <Newrelease title={item.vote_average} image={item.poster_path}/>}
+        renderItem={({item}) => <Newrelease title={item.vote_average} image={item.poster_path} 
+        onPress={() =>{ 
+          navigation.navigate('details',item)}}
+        />}
         keyExtractor={item => item.id.toString()}
         
       />)
@@ -153,7 +156,10 @@ export default function Landing({navigation}) {
         popularMovies.map((item,index)=>{
           return (
             <View key={index}>
-            <Popularmuvi title={item.vote_average} image={item.poster_path}/>
+            <Popularmuvi title={item.vote_average} image={item.poster_path} 
+            onPress={() =>{ 
+          navigation.navigate('details',item)}}
+          />
             </View>
           )
         })
