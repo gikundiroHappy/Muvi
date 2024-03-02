@@ -3,6 +3,8 @@ import {View,StyleSheet,Text,Image,SafeAreaView, ScrollView,Dimensions,FlatList,
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import Feather from 'react-native-vector-icons/Feather'
 import Newrelease from '../components/newRelease.jsx';
+import axios from 'axios';
+import YouTube from 'react-native-youtube-iframe';
 
 const height = Dimensions.get('screen').height;
 const width = Dimensions.get('screen').width;
@@ -11,14 +13,15 @@ export default function Moviedetails({navigation,route}) {
   const [isLoading, setIsLoading] = useState(false)
   const [movies,setMovies] = useState([])
   const [madeMovies, setMadeMovies] = useState([])
-  const [play, setPlay] = useState()
+  const [play, setPlay] = useState([])
+  const [videoPlay, setVideoPlay] = useState(false)
 
   const  movie  = route.params;
-  const posterPath = movie.poster_path;
 
   useEffect(() => {
     Getmovies()
     GetmadeMovies()
+    Playmovie()
   },[]);
 
   const options = {
@@ -51,10 +54,12 @@ export default function Moviedetails({navigation,route}) {
   
   const Playmovie = async ()=>{
     const response = await axios.get(`https://api.themoviedb.org/3/movie/${movie.id}/videos?language=en-US`, options);
-    setPlay(response.data);
-    console.log(response.data)
+    setPlay(response.data.results[0].key);
   }
- 
+
+  const handleVideoReady = () => {
+    setVideoPlay(true);
+};
 
   return (
     <SafeAreaView style={styles.container}>
@@ -64,10 +69,17 @@ export default function Moviedetails({navigation,route}) {
     <Text style={{color:"white",fontWeight:"bold",fontSize:16 }}>Action</Text>
     </View>
 
-  <View style={{display:"flex",flexDirection:"row",justifyContent:"center"}}>
-  <Image source={{ uri: `https://image.tmdb.org/t/p/w500${posterPath}` }} style={{width:"100%",height:180,}} />
+  <View>
+  {isLoading?  (<ActivityIndicator animating={isLoading} color='#FFD130'/>):(
+  <YouTube
+         remote="https://shahab-yousefi.github.io/react-native-youtube-iframe/youtube.html"
+         videoId={play}
+         height={200}
+         width={'100%'}
+         onReady={handleVideoReady}
+  />)}
   </View>
-
+  <ScrollView showsVerticalScrollIndicator={false}>
   <View>
     <Text style={{fontWeight:600,fontSize:20,color:"white",paddingVertical:20}}>{movie.title}</Text>
     <Text style={{fontSize:16,color:"#919397",paddingVertical:10}}>{movie?.overview}</Text>
@@ -75,7 +87,7 @@ export default function Moviedetails({navigation,route}) {
 
 <View style={{display:"flex",flexDirection:"row", gap:13,width:"100%",paddingVertical:20,}}>
   <TouchableOpacity style={{backgroundColor:"#FDD12F",display:"flex",flexDirection:"row", gap:6,alignItems:"center",justifyContent:"center",width:"48%",paddingVertical:9,borderRadius:5}}
-  onPress={Playmovie}
+
   >
   <Feather name='play'/>
   <Text>Play</Text>
@@ -87,8 +99,43 @@ export default function Moviedetails({navigation,route}) {
   </TouchableOpacity>
 </View>
 
+    <View style={{backgroundColor:"#26282C", paddingHorizontal:20, paddingBottom:15}}>
 
-<ScrollView>
+      <View>
+      <View>
+        <Text style={{fontWeight:600,fontSize:20,color:"white",paddingVertical:20}}>US Action movies</Text>
+      </View>
+
+      <View>
+{isLoading?  (<ActivityIndicator animating={isLoading} color='#FFD130'/>):( <FlatList horizontal showsHorizontalScrollIndicator={false}
+        data={movies}
+        renderItem={({item}) => <Newrelease title={item.vote_average} image={item.poster_path}/>}
+        keyExtractor={item => item.id.toString()}
+        
+      />)}
+
+    </View>
+    </View>
+
+    <View>
+      <View>
+        <Text style={{fontWeight:600,fontSize:20,color:"white",paddingVertical:20}}>Made for You</Text>
+      </View>
+
+      <View>
+      {isLoading?  (<ActivityIndicator animating={isLoading} color='#FFD130'/>):(<FlatList horizontal showsHorizontalScrollIndicator={false}
+        data={madeMovies}
+        renderItem={({item}) => <Newrelease title={item.vote_average} image={item.poster_path}/>}
+        keyExtractor={item => item.id.toString()}
+        
+      />)
+      }
+    
+    </View>
+    </View>
+
+    </View>
+
     <View style={{backgroundColor:"#26282C", paddingHorizontal:20, paddingBottom:15}}>
 
       <View>
