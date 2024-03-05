@@ -17,6 +17,7 @@ export default function Moviedetails({navigation,route}) {
   const [videoPlay, setVideoPlay] = useState(false)
 
   const  movie  = route.params;
+  
 
   useEffect(() => {
     Getmovies()
@@ -82,7 +83,7 @@ export default function Moviedetails({navigation,route}) {
   <ScrollView showsVerticalScrollIndicator={false}>
   <View>
     <Text style={{fontWeight:600,fontSize:20,color:"white",paddingVertical:20}}>{movie.title}</Text>
-    <Text style={{fontSize:16,color:"#919397",paddingVertical:10}}>{movie?.overview}</Text>
+    <Text style={{fontSize:16,color:"#919397",paddingVertical:10}}>{movie.overview}</Text>
   </View>
 
 <View style={{display:"flex",flexDirection:"row", gap:13,width:"100%",paddingVertical:20,}}>

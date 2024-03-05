@@ -7,6 +7,7 @@ import Features from '../components/features.jsx';
 import Newrelease from '../components/newRelease.jsx';
 import Popularmuvi from '../components/popular.jsx';
 import { ActivityIndicator } from 'react-native-paper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const height = Dimensions.get('screen').height;
 const width = Dimensions.get('screen').width;
@@ -18,12 +19,14 @@ export default function Landing({navigation}) {
   const [madeMovies, setMadeMovies] = useState([])
   const [isLoading, setIsLoading] = useState(false)
 
+  const GetData = async () =>{
+     const userexist = await AsyncStorage.getItem('user_data')
+     if(userexist == null){
+      navigation.navigate('register')
+     }
+     console.log(await AsyncStorage.getItem('user_data'))
+  }
   
-  useEffect(() => {
-    Getmovies()
-    Getpopular()
-    GetmadeMovies()
-  },[]);
 
   const options = {
     method: 'GET',
@@ -61,6 +64,13 @@ export default function Landing({navigation}) {
       })
       .catch(err => console.error(err));
   }
+
+  useEffect(() => {
+    Getmovies()
+    Getpopular()
+    GetmadeMovies()
+    GetData()
+  },[]);
 
   return (
 <SafeAreaView style={{ backgroundColor:"#1F2123", height:height,width:width}}>

@@ -4,6 +4,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import StandardTextInput from '../components/StandardTextinput';
 import Button from '../components/Button';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const height = Dimensions.get('screen').height;
@@ -45,12 +46,19 @@ export default function Login() {
       return valid;
     }
 
-    const handleLogin = () =>{
+    const handleLogin = async () =>{
       if (validForm()) {
         navigation.navigate('landing')
         setEmail('')
         setPassword('')
         console.log('Form submitted:', email, password)
+        
+        const data ={
+          email:email,
+          password:password
+        }
+
+       await AsyncStorage.setItem('user_data',JSON.stringify(data))
     }
     }
 
