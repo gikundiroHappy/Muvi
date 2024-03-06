@@ -4,7 +4,10 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import StandardTextInput from '../components/StandardTextinput';
 import Button from '../components/Button';
 import { useNavigation } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { FIREBASE_AUTH } from '../FirebaseConfiguration';
+import FlashMessage,{ showMessage} from "react-native-flash-message";
 
 
 const height = Dimensions.get('screen').height;
@@ -48,22 +51,44 @@ export default function Login() {
 
     const handleLogin = async () =>{
       if (validForm()) {
-        navigation.navigate('landing')
-        setEmail('')
-        setPassword('')
-        console.log('Form submitted:', email, password)
+       
         
-        const data ={
-          email:email,
-          password:password
-        }
+      //   const data ={
+      //     email:email,
+      //     password:password
+      //   }
 
-       await AsyncStorage.setItem('user_data',JSON.stringify(data))
+      //  await AsyncStorage.setItem('user_data',JSON.stringify(data))
+try{
+const response = await signInWithEmailAndPassword(FIREBASE_AUTH,email,password)
+  console.log(response)
+  showMessage({
+    message: "you are logged in",
+    hideStatusBar:true,
+    type: "success",
+    icon:"success",
+    duration:6000
+  });
+  navigation.navigate('landing')
+}catch(error){
+  showMessage({
+    message: error.code.toString(),
+    hideStatusBar:true,
+    type: "danger",
+    icon:"danger",
+   duration:3000
+  });
+}finally{
+ setEmail('')
+ setPassword('')
+}
+
     }
     }
 
   return (
     <SafeAreaView style={styles.container}>
+      <FlashMessage position="top" />
       <ScrollView>
     <View style={{paddingHorizontal:20,paddingVertical:20,display:"flex",flexDirection:"row",gap:10}}>
     <AntDesign name="arrowleft" color="#FBC101" size={20} onPress={() => navigation.goBack()}/>

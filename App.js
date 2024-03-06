@@ -1,4 +1,4 @@
-
+// import { useState } from 'react';
 import {StyleSheet} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -10,14 +10,25 @@ import Login from './screens/Login.js'
 import Bottomnav from './screens/BottomNav/Bottomnav.js';
 import Moviedetails from './screens/Moviedetails.js';
 import Editprofile from './screens/Editprofile.js';
+import { FIREBASE_AUTH } from './FirebaseConfiguration.js';
+import { onAuthStateChanged } from 'firebase/auth';
 
 
 const Stack = createNativeStackNavigator();
+// const [user,setUser]= useState('')
+// onAuthStateChanged(FIREBASE_AUTH, (user)=>{
+//   if(user){
+// setUser(user)
+//   }else{
+//     setUser(null)
+//   }
+// })
 
 export default function App() {
   return (
    <NavigationContainer>
    <Stack.Navigator initialRouteName='welcome'>
+    {/* {user?(<></>):(<></>)} */}
         {/* <Stack.Screen name="home" component={Home} options={{ headerShown: false }} /> */}
         <Stack.Screen name="welcome" component={Welcome} options={{ headerShown: false }} />
         <Stack.Screen name="play" component={Play} options={{ headerShown: false }} />

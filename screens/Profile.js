@@ -3,6 +3,7 @@ import {View,StyleSheet,Image, Pressable,Dimensions,Text, SafeAreaView,FlatList,
 import Feather from 'react-native-vector-icons/Feather'
 import Profilecontent from '../components/profile.jsx';
 import { profileData } from '../properties';
+import { FIREBASE_AUTH } from '../FirebaseConfiguration.js';
 
 
 const height = Dimensions.get('screen').height;
@@ -10,6 +11,11 @@ const width = Dimensions.get('screen').width;
 
 export default function Profile({navigation}) {
     const url="https://images.pexels.com/photos/1326946/pexels-photo-1326946.jpeg?auto=compress&cs=tinysrgb&w=600";
+
+    const Logout = async()=>{
+      FIREBASE_AUTH.signOut()
+      navigation.navigate('login')
+    }
 
   return (
 
@@ -41,8 +47,9 @@ export default function Profile({navigation}) {
       <Text style={{color:"#656565",paddingBottom:10, paddingVertical:40}}>Terms & Condition</Text>
       <Text style={{color:"#656565"}}>Privacy & Policy</Text>
       <View style={{height:120}}></View>
-      <Pressable onPress={()=>navigation.navigate('home')}
-      style={{borderWidth:1, width:"100%", borderColor:"#3B3E3F",borderRadius:5,paddingVertical:10}}><Text style={{color:"#B76C5B",textAlign:"center"}}> Log Out</Text></Pressable>
+      <Pressable onPress={Logout}
+      style={{borderWidth:1, width:"100%", borderColor:"#3B3E3F",borderRadius:5,paddingVertical:10}}><Text style={{color:"#B76C5B",textAlign:"center"}}> Log Out</Text>
+      </Pressable>
 </View>
 
  </SafeAreaView>

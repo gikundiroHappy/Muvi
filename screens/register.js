@@ -3,6 +3,9 @@ import {View,StyleSheet,Text,Image,SafeAreaView, TouchableOpacity,Dimensions} fr
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import StandardTextInput from '../components/StandardTextinput';
 import Button from '../components/Button';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { FIREBASE_AUTH } from '../FirebaseConfiguration';
+import FlashMessage,{ showMessage, } from "react-native-flash-message";
 
 
 const height = Dimensions.get('screen').height;
@@ -57,15 +60,41 @@ export default function Register({navigation}) {
       return valid;
     }
 
-    const handleRegister = () =>{
+    const handleRegister =async () =>{
       if (validForm()) {
-        navigation.navigate('login')
-        console.log('Form submitted:', email, password)
+
+        try{
+          const response = await createUserWithEmailAndPassword(FIREBASE_AUTH,email,password)
+            console.log(response)
+            showMessage({
+              message: "you have signed up",
+              hideStatusBar:true,
+              type: "success",
+              icon:"success",
+              duration:6000
+            });
+            
+          }catch (error){
+            console.error(error)
+            showMessage({
+              message: error.code.toString(),
+              hideStatusBar:true,
+              type: "danger",
+             duration:3000
+            });
+            navigation.navigate('login')
+          }finally{
+          
+          }
+
+        // navigation.navigate('login')
+        // console.log('Form submitted:', email, password)
     }
     }
 
   return (
     <SafeAreaView style={styles.container}>
+       <FlashMessage position="top" />
     <View style={{paddingHorizontal:20,paddingVertical:10,display:"flex",flexDirection:"row",gap:10}}>
     <AntDesign name="arrowleft" color="#FBC101" size={20} onPress={() => navigation.goBack()}/>
     <Text style={{color:"white",fontWeight:"bold",fontSize:16 }}>Register</Text>
