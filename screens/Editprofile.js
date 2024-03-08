@@ -1,14 +1,16 @@
-import React from 'react';
+import React,{useContext} from 'react';
 import {View,StyleSheet,Text,Image,SafeAreaView, TouchableOpacity,Dimensions} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import StandardTextInput from '../components/StandardTextinput';
 import Button from '../components/Button';
+import { ChangeIntoDarkMode } from '../context/themeContext'
 
 
 const height = Dimensions.get('screen').height;
 const width = Dimensions.get('screen').width;
 
 export default function Editprofile({navigation}) {
+  const {darkMode} = useContext(ChangeIntoDarkMode)
 
     const url="https://images.pexels.com/photos/1326946/pexels-photo-1326946.jpeg?auto=compress&cs=tinysrgb&w=600";
 
@@ -19,7 +21,7 @@ export default function Editprofile({navigation}) {
     <Text style={{color:"white",fontWeight:"bold",fontSize:16 }}>Edit Profile</Text>
     </View>
 
-<View style={{backgroundColor:"#26282C"}}>
+<View style={{backgroundColor:darkMode?"white":"#26282C"}}>
     <View style={{display:'flex',flexDirection:"row", paddingVertical:30,justifyContent:"center" }}>
     <View style={{width:80, height:80,borderRadius:10,overflow:"hidden"}}>
     <Image source={{uri : url}} style={{width:"100%",height:"100%"}} />

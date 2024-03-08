@@ -6,6 +6,7 @@ import Mylist from '../Mylist.js';
 import Profile from '../Profile.js';
 import Search from '../Search.js';
 import Feather from 'react-native-vector-icons/Feather'
+import DrawerNavigator from '../drawer/drawer.js';
 
 const Tab = createBottomTabNavigator();
 
@@ -53,7 +54,7 @@ export default function Bottomnav() {
             <Feather name="folder" size={25} color={focused? '#FFD130' : '#AFB2B1'}/>
          }} />
 
-        <Tab.Screen name="profilepage" component={Profile} 
+        <Tab.Screen name="profilepage" component={DrawerNavigator} 
         options={{ headerShown: false,
           tabBarActiveTintColor: 'orange',
           tabBarInactiveTintColor: '#AFB2B1',

@@ -2,12 +2,10 @@ import React from 'react';
 import {View,StyleSheet,Text,ImageBackground, Dimensions} from 'react-native';
 import Button from '../components/Button';
 
-
 const height = Dimensions.get('screen').height;
 const width = Dimensions.get('screen').width;
 
 export default function Welcome({navigation}) {
-  
 
   return (
  <View style={styles.container}>

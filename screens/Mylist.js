@@ -1,13 +1,15 @@
-import React,{useEffect, useState} from 'react';
+import React,{useEffect, useState,useContext} from 'react';
 import {View,StyleSheet, ScrollView,Image,Dimensions, SafeAreaView,FlatList,ActivityIndicator} from 'react-native';
 import Mylistcard from '../components/Mylistcard';
 import { listData } from '../properties';
 import Features from '../components/features';
+import { ChangeIntoDarkMode } from '../context/themeContext'
 
 const height = Dimensions.get('screen').height;
 const width = Dimensions.get('screen').width;
 
 export default function Mylist() {
+  const {darkMode} = useContext(ChangeIntoDarkMode)
 
   const [moviesList,setMoviesList] = useState([])
   const [isLoading, setIsLoading] = useState(false)
@@ -37,9 +39,9 @@ export default function Mylist() {
   
 
   return (
- <SafeAreaView style={styles.container}>
-     <View style={{width:"100%",paddingHorizontal:20, paddingVertical:10}}>
-     <Image source={require('../assets/home.png')}/>
+ <SafeAreaView style={[styles.container,{backgroundColor:darkMode?'white':'#1F2123'} ]}>
+     <View style={{width:"100%",paddingHorizontal:20, paddingVertical:10,backgroundColor:"black"}}>
+     <Image source={require('../assets/home.png')} />
      </View>
 
      <View style={{paddingBottom:10}}>
@@ -53,7 +55,7 @@ export default function Mylist() {
 
   <ScrollView>
   {isLoading?  (<ActivityIndicator animating={isLoading} color='#FFD130'/>):(
-  <View style={{backgroundColor:"#26282C",paddingTop:20}}>
+  <View style={{backgroundColor:"#26282C"}}>
       {
         moviesList.map((item,index)=>{
           return (
@@ -73,7 +75,6 @@ export default function Mylist() {
 
 const styles = StyleSheet.create({
     container: {
-    backgroundColor:"#1F2123",
     width:width,
     height:height
     },

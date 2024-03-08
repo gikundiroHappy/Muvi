@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {View,Text, SafeAreaView,Image, ScrollView,FlatList,Dimensions} from 'react-native';
+import {View,Text, SafeAreaView,Image, ScrollView,FlatList,Dimensions ,TouchableOpacity,Modal} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { featuresData, trendData} from '../properties/index.jsx';
 import Trends from '../components/trends.jsx';
@@ -7,6 +7,8 @@ import Features from '../components/features.jsx';
 import Newrelease from '../components/newRelease.jsx';
 import Popularmuvi from '../components/popular.jsx';
 import { ActivityIndicator } from 'react-native-paper';
+import { useContext } from 'react';
+import { ChangeIntoDarkMode } from '../context/themeContext.jsx';
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const height = Dimensions.get('screen').height;
@@ -18,6 +20,7 @@ export default function Landing({navigation}) {
   const [popularMovies, setPopularMovies] = useState([])
   const [madeMovies, setMadeMovies] = useState([])
   const [isLoading, setIsLoading] = useState(false)
+  const [model,setModel] = useState(false)
 
   // const GetData = async () =>{
   //    const userexist = await AsyncStorage.getItem('user_data')
@@ -27,6 +30,7 @@ export default function Landing({navigation}) {
   //    console.log(await AsyncStorage.getItem('user_data'))
   // }
   
+  const {darkMode,handleMode} = useContext(ChangeIntoDarkMode)
 
   const options = {
     method: 'GET',
@@ -73,15 +77,24 @@ export default function Landing({navigation}) {
   },[]);
 
   return (
-<SafeAreaView style={{ backgroundColor:"#1F2123", height:height,width:width}}>
+<SafeAreaView style={{ backgroundColor:darkMode?'white':'#1F2123', height:height,width:width}}>
 
       
-    <View style={{ paddingHorizontal:20}}>
+    <View style={{ paddingHorizontal:2}}>
     <View style={{display:"flex",flexDirection:"row",alignItems:"center",justifyContent:"space-between"}}>
+      <View style={{width:"100%",backgroundColor:"black"}}>
     <Image source={require('../assets/home.png')}/>
+    </View>
     <View style={{display:"flex",flexDirection:"row",gap:20}}>
     <Ionicons name='bookmark-outline' color='white' size={20}/>
+    <TouchableOpacity onPress={()=>setModel(true)}>
     <Ionicons name='notifications-outline' color='white' size={20}/>
+    </TouchableOpacity>
+    <Modal visible={model}>
+<View style={{padding:40}}>
+  <Text>Your Notifications</Text>
+</View>
+    </Modal>
     </View>
     </View>
 
@@ -97,7 +110,7 @@ export default function Landing({navigation}) {
     </View>
 
 <ScrollView>
-    <View style={{backgroundColor:"#26282C", paddingHorizontal:20, paddingBottom:15}}>
+    <View style={{backgroundColor: darkMode?'rgba(000,000,000,0.2)':'#26282C', paddingHorizontal:20, paddingBottom:15}}>
       <View>
       <ScrollView horizontal showsHorizontalScrollIndicator={false} >
       {
@@ -114,7 +127,7 @@ export default function Landing({navigation}) {
 
       <View>
       <View style={{display:"flex",flexDirection:"row",justifyContent:"space-between",alignItems:"center"}}>
-        <Text style={{fontWeight:600,fontSize:20,color:"white",paddingVertical:20}}>New Release</Text>
+        <Text style={{fontWeight:600,fontSize:20,color:darkMode?'black':'white',paddingVertical:20}}>New Release</Text>
         <Text style={{fontWeight:600,color:"#585A5C"}}>View More</Text>
       </View>
 
@@ -132,7 +145,7 @@ export default function Landing({navigation}) {
 
     <View>
       <View style={{display:"flex",flexDirection:"row",justifyContent:"space-between",alignItems:"center"}}>
-        <Text style={{fontWeight:600,fontSize:20,color:"white",paddingVertical:20}}>Made for You</Text>
+        <Text style={{fontWeight:600,fontSize:20,color:darkMode?'black':'white',paddingVertical:20}}>Made for You</Text>
         <Text style={{fontWeight:600,color:"#585A5C"}}>View More</Text>
       </View>
 
@@ -156,7 +169,7 @@ export default function Landing({navigation}) {
 <View style={{ paddingHorizontal:20}}>
 
 <View style={{display:"flex",flexDirection:"row",justifyContent:"space-between",alignItems:"center"}}>
-        <Text style={{fontWeight:600,fontSize:20,color:"white",paddingVertical:20}}>Popular on <Text style={{color:"#E0C663"}}>Muvi</Text></Text>
+        <Text style={{fontWeight:600,fontSize:20,color:darkMode?'black':'white',paddingVertical:20}}>Popular on <Text style={{color:"#E0C663"}}>Muvi</Text></Text>
         <Text style={{fontWeight:600,color:"#585A5C"}}>View More</Text>
 </View>
 

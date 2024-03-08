@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useContext } from 'react';
 import {View,StyleSheet,Text,Image,SafeAreaView, TouchableOpacity, ScrollView,Dimensions} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import StandardTextInput from '../components/StandardTextinput';
@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { FIREBASE_AUTH } from '../FirebaseConfiguration';
 import FlashMessage,{ showMessage} from "react-native-flash-message";
+import { ChangeIntoDarkMode } from '../context/themeContext'
 
 
 const height = Dimensions.get('screen').height;
@@ -15,12 +16,13 @@ const width = Dimensions.get('screen').width;
 
 export default function Login() {
     const navigation = useNavigation();
+    const {darkMode} = useContext(ChangeIntoDarkMode)
 
     const [email,setEmail]=useState('');
     const [password,setPassword]=useState('')
     const [emailError, setEmailError] = useState('')
     const [passwordError, setPasswordError] = useState('')
-
+    const [toggle,setToggle]=useState(true);
    
     const isValidEmail = (email) => {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -87,16 +89,16 @@ const response = await signInWithEmailAndPassword(FIREBASE_AUTH,email,password)
     }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container,{backgroundColor:darkMode?'white':'#26282C'} ]}>
       <FlashMessage position="top" />
       <ScrollView>
-    <View style={{paddingHorizontal:20,paddingVertical:20,display:"flex",flexDirection:"row",gap:10}}>
+    <View style={{paddingHorizontal:20,paddingVertical:20,display:"flex",flexDirection:"row",gap:10,backgroundColor:"black"}}>
     <AntDesign name="arrowleft" color="#FBC101" size={20} onPress={() => navigation.goBack()}/>
     <Text style={{color:"white",fontWeight:"bold",fontSize:16 }}>Login</Text>
     </View>
 
-    <View style={{width:"100%", backgroundColor:"",display:"flex",flexDirection:"row",justifyContent:"center"}}>
-     <Image source={require('../assets/home.png')}/>
+    <View style={{width:"100%", backgroundColor:"",display:"flex",flexDirection:"row",justifyContent:"center",backgroundColor:"black"}}>
+     <Image source={require('../assets/home.png')} style={{}}/>
      </View>
 
      <View style={{paddingHorizontal:30, paddingVertical:20}}>
@@ -108,9 +110,16 @@ const response = await signInWithEmailAndPassword(FIREBASE_AUTH,email,password)
             onChangeText={setEmail} error={emailError}/>
             <View style={{height:30}}>{emailError?(<Text style={{color:"red", paddingVertical:4}}>{emailError}</Text>):null}</View>
 
-            <StandardTextInput label="Password" icon="lock-outline" secureTextEntry value={password} 
-            onChangeText={setPassword} error={passwordError}/>
-             <View style={{height:30}}>{passwordError?(<Text style={{color:"red", paddingVertical:2}}>{passwordError}</Text>):null}</View>
+            <StandardTextInput 
+            label="Password" 
+            secureTextEntry={toggle} 
+            value={password} 
+            icon={toggle? "eye-off-outline" : "eye-outline" }
+            onPress={()=>setToggle(!toggle)}
+            onChangeText={setPassword} 
+            error={passwordError}
+            />
+            <View style={{height:30}}>{passwordError?(<Text style={{color:"red", paddingVertical:2}}>{passwordError}</Text>):null}</View>
 
            <View style={{display:"flex",flexDirection:"row",justifyContent:"flex-end"}}>
             <Text style={{paddingVertical:20,color:"#FBC101",fontWeight:500}}>Forgot Password?</Text>
@@ -118,7 +127,7 @@ const response = await signInWithEmailAndPassword(FIREBASE_AUTH,email,password)
 
             <Button title="Get started" onPress={handleLogin} />
         </View>
-        <Text style={{color:"white",textAlign:"center", paddingVertical:25, fontSize:13}}>Or simply login with</Text>
+        <Text style={{color:darkMode? '#26282C' : 'white',textAlign:"center", paddingVertical:25, fontSize:13}}>Or simply login with</Text>
         <View>
 
         <TouchableOpacity style={{backgroundColor:"black", color: "#FFFFFF",paddingVertical:15,borderRadius:10, display:"flex",flexDirection:"row",alignItems:"center",justifyContent:"center",gap:10}}>
@@ -149,7 +158,6 @@ const response = await signInWithEmailAndPassword(FIREBASE_AUTH,email,password)
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor:"#26282C",
         flex:1,
         width:width,
         height:height

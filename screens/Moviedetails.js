@@ -1,15 +1,18 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState,useEffect,useContext} from 'react';
 import {View,StyleSheet,Text,Image,SafeAreaView, ScrollView,Dimensions,FlatList,ActivityIndicator,TouchableOpacity} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import Feather from 'react-native-vector-icons/Feather'
 import Newrelease from '../components/newRelease.jsx';
 import axios from 'axios';
 import YouTube from 'react-native-youtube-iframe';
+import { ChangeIntoDarkMode } from '../context/themeContext'
 
 const height = Dimensions.get('screen').height;
 const width = Dimensions.get('screen').width;
 
 export default function Moviedetails({navigation,route}) {
+  const {darkMode} = useContext(ChangeIntoDarkMode)
+
   const [isLoading, setIsLoading] = useState(false)
   const [movies,setMovies] = useState([])
   const [madeMovies, setMadeMovies] = useState([])
@@ -63,27 +66,26 @@ export default function Moviedetails({navigation,route}) {
 };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container,{backgroundColor:darkMode?'white':'#26282C'} ]}>
       <View style={{paddingHorizontal:20,}}>
     <View style={{paddingVertical:30,display:"flex",flexDirection:"row",gap:10}}>
     <AntDesign name="arrowleft" color="#FBC101" size={20} onPress={() => navigation.goBack()}/>
-    <Text style={{color:"white",fontWeight:"bold",fontSize:16 }}>Action</Text>
+    <Text style={{color:darkMode?'black':'white',fontWeight:"bold",fontSize:16 }}>Action</Text>
     </View>
 
   <View>
   {isLoading?  (<ActivityIndicator animating={isLoading} color='#FFD130'/>):(
   <YouTube
          remote="https://shahab-yousefi.github.io/react-native-youtube-iframe/youtube.html"
-         videoId={play}
-         height={200}
+         videoId={play}         height={200}
          width={'100%'}
          onReady={handleVideoReady}
   />)}
   </View>
   <ScrollView showsVerticalScrollIndicator={false}>
   <View>
-    <Text style={{fontWeight:600,fontSize:20,color:"white",paddingVertical:20}}>{movie.title}</Text>
-    <Text style={{fontSize:16,color:"#919397",paddingVertical:10}}>{movie.overview}</Text>
+    <Text style={{fontWeight:600,fontSize:20,color:darkMode?'black':'white',paddingVertical:20}}>{movie.title}</Text>
+    <Text style={{fontSize:16,color:darkMode?'black':'#919397',paddingVertical:10}}>{movie.overview}</Text>
   </View>
 
 <View style={{display:"flex",flexDirection:"row", gap:13,width:"100%",paddingVertical:20,}}>
@@ -96,11 +98,11 @@ export default function Moviedetails({navigation,route}) {
 
   <TouchableOpacity style={{borderWidth:1,borderColor:"#FDD12F",display:"flex",flexDirection:"row", gap:6,alignItems:"center",justifyContent:"center",width:"48%",paddingVertical:9,borderRadius:5}}>
   <Feather name='plus' color='#FDD12F'/>
-  <Text style={{color:"white"}}>My List</Text>
+  <Text style={{color:darkMode?'black':"white"}}>My List</Text>
   </TouchableOpacity>
 </View>
 
-    <View style={{backgroundColor:"#26282C", paddingHorizontal:20, paddingBottom:15}}>
+    <View style={{backgroundColor:darkMode?"white":"#26282C", paddingHorizontal:20, paddingBottom:15}}>
 
       <View>
       <View>
@@ -137,7 +139,7 @@ export default function Moviedetails({navigation,route}) {
 
     </View>
 
-    <View style={{backgroundColor:"#26282C", paddingHorizontal:20, paddingBottom:15}}>
+    <View style={{backgroundColor:darkMode?"white":"#26282C", paddingHorizontal:20, paddingBottom:15}}>
 
       <View>
       <View>
@@ -182,7 +184,6 @@ export default function Moviedetails({navigation,route}) {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor:"#26282C",
         flex:1,
         width:width,
         height:height,

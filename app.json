@@ -8,16 +8,17 @@
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/logo.png",
-      "resizeMode": "center",
-      "height":40,
-      "width":40,
+      "resizeMode": "contain",
+      "height": 40,
+      "width": 40,
       "backgroundColor": "#000000"
     },
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "host.exp.Exponent"
     },
     "android": {
       "adaptiveIcon": {
@@ -27,6 +28,11 @@
     },
     "web": {
       "favicon": "./assets/logo.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "9d503e49-51f8-41a2-963f-8d757cfe111e"
+      }
     }
   }
 }

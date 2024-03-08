@@ -1,10 +1,11 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState,useEffect,useContext} from 'react';
 import {View,StyleSheet, ScrollView,Image,Dimensions,Text, SafeAreaView,FlatList} from 'react-native';
 import { TextInput } from 'react-native-paper';
 import Features from '../components/features';
 import { featuresData } from '../properties';
 import Popularmuvi from '../components/popular.jsx';
 import axios from 'axios';
+import { ChangeIntoDarkMode } from '../context/themeContext.jsx';
 
 const height = Dimensions.get('screen').height;
 const width = Dimensions.get('screen').width;
@@ -13,6 +14,9 @@ export default function Search({navigation}) {
 
   const [searchText, setSearchText] = useState('')
   const [data, setData] = useState([])
+
+  const [darkToggle,setDarkToggle] = useState(false)
+    const {darkMode} = useContext(ChangeIntoDarkMode)
   
   const options = {
     method: 'GET',
@@ -46,9 +50,9 @@ export default function Search({navigation}) {
 
   return (
  <SafeAreaView style={styles.container}>
-    <View style={{backgroundColor:"#26282C" , paddingHorizontal:20 ,paddingVertical:20}}>
+    <View style={{backgroundColor:darkMode?'white':'#26282C' , paddingHorizontal:20 ,paddingVertical:20}}>
     <TextInput label="Search Movie Title" value={searchText} onChangeText={setSearchText}
-    style={{backgroundColor:"1F2123",}} underlineColor='#77787C' textColor="white"
+    style={{backgroundColor:"1F2123",}} underlineColor='#77787C' textColor={darkMode?'black':'white'}
     theme={{colors:{primary:"#E0BF36"}}}
     right={<TextInput.Icon size={19} icon="magnify" color="#EED251" onPress={GetSearch}></TextInput.Icon>}
     />

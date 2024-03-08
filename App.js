@@ -2,7 +2,6 @@
 import {StyleSheet} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import Home from './screens/Home.js';
 import Welcome from './screens/Welcome.js';
 import Play from './screens/Play.js';
 import Register from './screens/register.js';
@@ -10,6 +9,7 @@ import Login from './screens/Login.js'
 import Bottomnav from './screens/BottomNav/Bottomnav.js';
 import Moviedetails from './screens/Moviedetails.js';
 import Editprofile from './screens/Editprofile.js';
+import { ThemeProviderIntoDarkMode } from './context/themeContext.jsx';
 import { FIREBASE_AUTH } from './FirebaseConfiguration.js';
 import { onAuthStateChanged } from 'firebase/auth';
 
@@ -26,10 +26,10 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
+    <ThemeProviderIntoDarkMode>
    <NavigationContainer>
    <Stack.Navigator initialRouteName='welcome'>
     {/* {user?(<></>):(<></>)} */}
-        {/* <Stack.Screen name="home" component={Home} options={{ headerShown: false }} /> */}
         <Stack.Screen name="welcome" component={Welcome} options={{ headerShown: false }} />
         <Stack.Screen name="play" component={Play} options={{ headerShown: false }} />
         <Stack.Screen name="register" component={Register} options={{ headerShown: false }} />
@@ -44,7 +44,7 @@ export default function App() {
 
     </Stack.Navigator>
     </NavigationContainer>
- 
+    </ThemeProviderIntoDarkMode>
   );
 }
 
