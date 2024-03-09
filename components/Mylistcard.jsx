@@ -6,7 +6,7 @@ import { ChangeIntoDarkMode } from '../context/themeContext'
 export default function Mylistcard({title,image,year, category, onPress}) {
   const {darkMode} = useContext(ChangeIntoDarkMode)
   return (
- <TouchableOpacity style={{display:'flex',flexDirection:"row",gap:10, paddingVertical:10,paddingHorizontal:20,backgroundColor:darkMode?'white':'black' }} onPress={onPress}>
+ <TouchableOpacity style={{display:'flex',flexDirection:"row",gap:10, paddingVertical:10,paddingHorizontal:20,backgroundColor:darkMode?'white':'#26282C' }} onPress={onPress}>
     <View style={{width:200, height:120}}>
     <Image source={{uri : `https://image.tmdb.org/t/p/w500${image}`}} style={{width:"100%", height:"100%"}}/>
     </View>

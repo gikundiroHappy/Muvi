@@ -40,11 +40,11 @@ export default function Mylist() {
 
   return (
  <SafeAreaView style={[styles.container,{backgroundColor:darkMode?'white':'#1F2123'} ]}>
-     <View style={{width:"100%",paddingHorizontal:20, paddingVertical:10,backgroundColor:"black"}}>
+     <View style={{width:"100%",paddingHorizontal:20, paddingVertical:10,backgroundColor:"#1F2123"}}>
      <Image source={require('../assets/home.png')} />
      </View>
 
-     <View style={{paddingBottom:10}}>
+     <View style={{paddingBottom:10, backgroundColor:darkMode?'#1F2123':'#1F2123'}}>
      <FlatList horizontal showsHorizontalScrollIndicator={false}
         data={listData}
         renderItem={({item}) => <Features name={item.name} />}

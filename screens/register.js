@@ -99,12 +99,12 @@ export default function Register({navigation}) {
   return (
     <SafeAreaView style={[styles.container,{backgroundColor:darkMode?'white':'#26282C'} ]}>
        <FlashMessage position="top" />
-    <View style={{paddingHorizontal:20,paddingVertical:10,display:"flex",flexDirection:"row",gap:10,backgroundColor:"black"}}>
+    <View style={{paddingHorizontal:20,paddingVertical:10,display:"flex",flexDirection:"row",gap:10,backgroundColor:"#26282C"}}>
     <AntDesign name="arrowleft" color="#FBC101" size={20} onPress={() => navigation.goBack()}/>
     <Text style={{color:"white",fontWeight:"bold",fontSize:16 }}>Register</Text>
     </View>
 
-    <View style={{width:"100%", backgroundColor:"",display:"flex",flexDirection:"row",justifyContent:"center",backgroundColor:"black"}}>
+    <View style={{width:"100%", backgroundColor:"#26282C",display:"flex",flexDirection:"row",justifyContent:"center"}}>
      <Image source={require('../assets/home.png')} />
      </View>
 

@@ -23,7 +23,7 @@ export default function Profile({navigation}) {
 
   return (
 
- <SafeAreaView style={[styles.container,{backgroundColor:darkMode?'white':'black'} ]}>
+ <SafeAreaView style={[styles.container,{backgroundColor:darkMode?'white':'#202123'} ]}>
   <View style={{display:"flex",flexDirection:"row",justifyContent:"space-between"}}>
  <TouchableOpacity style={{ padding: 30 }} onPress={() => navigation.openDrawer()}>
   <Text style={{ color:darkMode?'black':'white', fontWeight: "bold", paddingBottom: 10, fontSize: 19 }}>More</Text>

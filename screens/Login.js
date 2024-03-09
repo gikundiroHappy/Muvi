@@ -92,12 +92,12 @@ const response = await signInWithEmailAndPassword(FIREBASE_AUTH,email,password)
     <SafeAreaView style={[styles.container,{backgroundColor:darkMode?'white':'#26282C'} ]}>
       <FlashMessage position="top" />
       <ScrollView>
-    <View style={{paddingHorizontal:20,paddingVertical:20,display:"flex",flexDirection:"row",gap:10,backgroundColor:"black"}}>
+    <View style={{paddingHorizontal:20,paddingVertical:20,display:"flex",flexDirection:"row",gap:10,backgroundColor:"#26282C"}}>
     <AntDesign name="arrowleft" color="#FBC101" size={20} onPress={() => navigation.goBack()}/>
     <Text style={{color:"white",fontWeight:"bold",fontSize:16 }}>Login</Text>
     </View>
 
-    <View style={{width:"100%", backgroundColor:"",display:"flex",flexDirection:"row",justifyContent:"center",backgroundColor:"black"}}>
+    <View style={{width:"100%", backgroundColor:"#26282C",display:"flex",flexDirection:"row",justifyContent:"center"}}>
      <Image source={require('../assets/home.png')} style={{}}/>
      </View>
 

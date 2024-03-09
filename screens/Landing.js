@@ -82,7 +82,7 @@ export default function Landing({navigation}) {
       
     <View style={{ paddingHorizontal:2}}>
     <View style={{display:"flex",flexDirection:"row",alignItems:"center",justifyContent:"space-between"}}>
-      <View style={{width:"100%",backgroundColor:"black"}}>
+      <View style={{width:"100%",backgroundColor:"#1F2123"}}>
     <Image source={require('../assets/home.png')}/>
     </View>
     <View style={{display:"flex",flexDirection:"row",gap:20}}>
