@@ -44,7 +44,7 @@ export default function Mylist() {
      <Image source={require('../assets/home.png')} />
      </View>
 
-     <View style={{paddingBottom:10, backgroundColor:darkMode?'#1F2123':'#1F2123'}}>
+     <View style={{paddingBottom:10, backgroundColor:darkMode?'rgba(000,000,000,0.1)':'#1F2123'}}>
      <FlatList horizontal showsHorizontalScrollIndicator={false}
         data={listData}
         renderItem={({item}) => <Features name={item.name} />}

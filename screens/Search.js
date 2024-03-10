@@ -15,7 +15,7 @@ export default function Search({navigation}) {
   const [searchText, setSearchText] = useState('')
   const [data, setData] = useState([])
 
-  const [darkToggle,setDarkToggle] = useState(false)
+
     const {darkMode} = useContext(ChangeIntoDarkMode)
   
   const options = {

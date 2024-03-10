@@ -7,9 +7,7 @@ export const ChangeIntoDarkMode = createContext()
 export const ThemeProviderIntoDarkMode=({children})=>{
     const [darkMode,setDarkMode]=useState(false)
 
-    // const data={
-    //     name:"happy",
-    // }
+
     useEffect(() => {
         const loadDarkModePreference = async () => {
           try {

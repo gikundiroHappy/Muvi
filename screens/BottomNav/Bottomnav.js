@@ -24,6 +24,7 @@ export default function Bottomnav() {
         options={{ 
           headerStyle: { backgroundColor: "#1F2123", height:100 },
           headerTintColor: "#1F2123",
+          headerTitle:"",
           headerBackTitleVisible: false,
           headerLeft: () => <Image source={require('../../assets/home.png')} style={{height:50, width:150,marginLeft:20}}/>,
           headerRight: () => {
