@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {View,Text, SafeAreaView,Image, ScrollView,FlatList,Dimensions ,TouchableOpacity,Modal} from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import { featuresData, trendData} from '../properties/index.jsx';
+import { trendData} from '../properties/index.jsx';
 import Trends from '../components/trends.jsx';
-import Features from '../components/features.jsx';
 import Newrelease from '../components/newRelease.jsx';
 import Popularmuvi from '../components/popular.jsx';
 import { ActivityIndicator } from 'react-native-paper';
@@ -78,37 +76,6 @@ export default function Landing({navigation}) {
 
   return (
 <SafeAreaView style={{ backgroundColor:darkMode?'white':'#1F2123', height:height,width:width}}>
-
-      
-    <View style={{ paddingHorizontal:2}}>
-    <View style={{display:"flex",flexDirection:"row",alignItems:"center",justifyContent:"space-between"}}>
-      <View style={{width:"100%",backgroundColor:"#1F2123"}}>
-    <Image source={require('../assets/home.png')}/>
-    </View>
-    <View style={{display:"flex",flexDirection:"row",gap:20}}>
-    <Ionicons name='bookmark-outline' color='white' size={20}/>
-    <TouchableOpacity onPress={()=>setModel(true)}>
-    <Ionicons name='notifications-outline' color='white' size={20}/>
-    </TouchableOpacity>
-    <Modal visible={model}>
-<View style={{padding:40}}>
-  <Text>Your Notifications</Text>
-</View>
-    </Modal>
-    </View>
-    </View>
-
-    <View style={{paddingVertical:10}}>
-   <FlatList horizontal showsHorizontalScrollIndicator={false}
-        data={featuresData}
-        renderItem={({item}) => <Features name={item.name} />}
-        keyExtractor={item => item.id.toString()}
-        
-      />
-    </View>
-
-    </View>
-
 <ScrollView>
     <View style={{backgroundColor: darkMode?'rgba(000,000,000,0.2)':'#26282C', paddingHorizontal:20, paddingBottom:15}}>
       <View>

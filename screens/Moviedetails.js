@@ -1,10 +1,12 @@
 import React,{useState,useEffect,useContext} from 'react';
-import {View,StyleSheet,Text,Image,SafeAreaView, ScrollView,Dimensions,FlatList,ActivityIndicator,TouchableOpacity} from 'react-native';
+import {View,StyleSheet,Text,Image,SafeAreaView, ScrollView,Dimensions,FlatList,ActivityIndicator,TouchableOpacity, Linking} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import Feather from 'react-native-vector-icons/Feather'
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 import Newrelease from '../components/newRelease.jsx';
 import axios from 'axios';
-import YouTube from 'react-native-youtube-iframe';
+import YoutubePlayer from "react-native-youtube-iframe";
 import { ChangeIntoDarkMode } from '../context/themeContext'
 
 const height = Dimensions.get('screen').height;
@@ -18,6 +20,7 @@ export default function Moviedetails({navigation,route}) {
   const [madeMovies, setMadeMovies] = useState([])
   const [play, setPlay] = useState([])
   const [videoPlay, setVideoPlay] = useState(false)
+  const [playing, setplaying] = useState(null)
 
   const  movie  = route.params;
   
@@ -61,9 +64,12 @@ export default function Moviedetails({navigation,route}) {
     setPlay(response.data.results[0].key);
   }
 
-  const handleVideoReady = () => {
-    setVideoPlay(true);
+  const HandlePlay= () => {
+    setVideoPlay(!videoPlay);
 };
+
+let message = '';
+if (playing != null) message = `https://www.youtube.com/watch?v=${playing?.results[0]?.key}`
 
   return (
     <SafeAreaView style={[styles.container,{backgroundColor:darkMode?'white':'#26282C'} ]}>
@@ -75,25 +81,29 @@ export default function Moviedetails({navigation,route}) {
 
   <View>
   {isLoading?  (<ActivityIndicator animating={isLoading} color='#FFD130'/>):(
-  <YouTube
-         remote="https://shahab-yousefi.github.io/react-native-youtube-iframe/youtube.html"
-         videoId={play}         height={200}
-         width={'100%'}
-         onReady={handleVideoReady}
-  />)}
+  <YoutubePlayer
+        height={200}
+        play={videoPlay}
+        videoId={play}
+      />
+  )}
   </View>
   <ScrollView showsVerticalScrollIndicator={false}>
-  <View>
+  <View style={{display:'flex', flexDirection:"row", alignItems:"center",justifyContent:"space-between"}}>
     <Text style={{fontWeight:600,fontSize:20,color:darkMode?'black':'white',paddingVertical:20}}>{movie.title}</Text>
-    <Text style={{fontSize:16,color:darkMode?'black':'#919397',paddingVertical:10}}>{movie.overview}</Text>
+    <TouchableOpacity onPress={()=>Linking.openURL(`whatsapp://send?text=${message}`)}>
+<FontAwesome name='whatsapp' color='#FDD12F' size={25}/>
+    </TouchableOpacity>
   </View>
+    <Text style={{fontSize:16,color:darkMode?'black':'#919397',paddingVertical:10}}>{movie.overview}</Text>
+  
 
 <View style={{display:"flex",flexDirection:"row", gap:13,width:"100%",paddingVertical:20,}}>
   <TouchableOpacity style={{backgroundColor:"#FDD12F",display:"flex",flexDirection:"row", gap:6,alignItems:"center",justifyContent:"center",width:"48%",paddingVertical:9,borderRadius:5}}
-
+     onPress={HandlePlay}
   >
-  <Feather name='play'/>
-  <Text>Play</Text>
+  <Ionicons name={videoPlay?'pause-outline':'play'} />
+  <Text>{videoPlay ? "pause" : "play"}</Text>
   </TouchableOpacity>
 
   <TouchableOpacity style={{borderWidth:1,borderColor:"#FDD12F",display:"flex",flexDirection:"row", gap:6,alignItems:"center",justifyContent:"center",width:"48%",paddingVertical:9,borderRadius:5}}>

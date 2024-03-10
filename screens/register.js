@@ -90,9 +90,6 @@ export default function Register({navigation}) {
           }finally{
           
           }
-
-        // navigation.navigate('login')
-        // console.log('Form submitted:', email, password)
     }
     }
 
